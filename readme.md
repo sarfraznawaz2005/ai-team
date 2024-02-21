@@ -132,7 +132,7 @@ member is passed to next.
 
 - OpenAI
 - Google Gemini ([They provide reasonable free plan](https://ai.google.dev/tutorials/rest_quickstart))
-- Local LLMs (see example)
+- Local LLMs ([see example](https://github.com/sarfraznawaz2005/ai-team/blob/main/examples/LocalAI_Example.php))
 
 **LLM Signature**
 
