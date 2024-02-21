@@ -254,7 +254,7 @@ $awesomeMember = (new Member('Researcher', 'You are a Researcher', new GoogleGem
 
 ## Todo
 
-[ ] Allow task delegation between members until provided goal is achieved.
+- [ ] Allow task delegation between members until provided goal is achieved.
 
 ## Note
 
