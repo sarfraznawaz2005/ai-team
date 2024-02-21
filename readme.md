@@ -1,6 +1,6 @@
-# AI-Team
+# :robot: AI-Team
 
-:robot: A package allowing to create team of AI members that can work and collaborate together to achieve a common goal.
+A package allowing to create team of AI members that can work and collaborate together to achieve a common goal.
 
 ## Installation
 
@@ -120,7 +120,7 @@ FINAL TEAM RESULT:
 Sachin Tendulkar
 ```
 
-[See more examples here](http://google.com).
+[See more examples here](https://github.com/sarfraznawaz2005/ai-team/tree/main/examples)
 
 ## How it works ?
 
@@ -191,8 +191,8 @@ $awesomeMember = (new Member('Researcher', 'You are a Researcher', new GoogleGem
 
 Two built-in data providers are provided by the package:
 
-- *LLMDataProvider*: Provides results for given prompt by asking LLM model. [See Example](https:google.com)
-- *UrlDataProvider*: Provides results for given URL by asking LLM model. [See Example](https:google.com)
+- *LLMDataProvider*: Provides results for given prompt by asking LLM model. [See Example](https://github.com/sarfraznawaz2005/ai-team/blob/main/examples/TripPlan_Example.php)
+- *UrlDataProvider*: Provides results for given URL by asking LLM model. [See Example](https://github.com/sarfraznawaz2005/ai-team/blob/main/examples/UrlResearch_Example.php)
 
 **Creating a Team**
 
@@ -254,7 +254,7 @@ $awesomeMember = (new Member('Researcher', 'You are a Researcher', new GoogleGem
  echo $awesomeMember->performTask();
 ```
 
-[See Example](https://google.com)
+[See Example](https://github.com/sarfraznawaz2005/ai-team/blob/main/examples/CodeGenerator_Example.php)
 
 ## Note
 
