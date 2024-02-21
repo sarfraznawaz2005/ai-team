@@ -1,0 +1,30 @@
+{
+    "name": "sarfraznawaz2005/ai-team",
+    "description": "A package allowing to create team of AI members that can work and collaborate together to achieve a common goal.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sarfraz Ahmed",
+            "email": "sarfraznawaz2005@gmail.com"
+        }
+    ],
+    "keywords": [
+        "php",
+        "ai",
+        "llm",
+        "openai",
+        "gemini",
+        "agents",
+        "team"
+    ],
+    "autoload": {
+        "psr-4": {
+            "Sarfraznawaz2005\\AiTeam\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=8.0"
+    },
+    "minimum-stability": "stable"
+}

@@ -1,0 +1,12 @@
+{
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../"
+        }
+    ],
+    "require": {
+        "sarfraznawaz2005/ai-team": "*"
+    },
+    "minimum-stability": "dev"
+}
