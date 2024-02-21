@@ -34,7 +34,7 @@ $webDesigner =
 			Generate HTML and CSS for a modern website homepage. Include a responsive navbar, hero section with
 			a call-to-action button, a services section showcasing three services, a testimonial slider, and a footer. Focus on a
 			clean, professional aesthetic suitable for a tech company. Create two files; index.html and styles.css. styles.css
-			will be in same folder as index.html file.
+			will be in same folder as index.html file. For images, use images placeholder service such as picsum.photos or some other.
 
 			'
 		)

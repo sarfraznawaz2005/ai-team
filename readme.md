@@ -252,6 +252,10 @@ $awesomeMember = (new Member('Researcher', 'You are a Researcher', new GoogleGem
 
 [See Example](https://github.com/sarfraznawaz2005/ai-team/blob/main/examples/CodeGenerator_Example.php)
 
+## Todo
+
+[ ] Allow task delegation between members until provided goal is achieved.
+
 ## Note
 
 Although inspired by excellent [CrewAI](https://github.com/joaomdmoura/crewai/) python package, AI-Team ended up being
