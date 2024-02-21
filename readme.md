@@ -134,7 +134,7 @@ member is passed to next.
 - Google Gemini ([They provide reasonable free plan](https://ai.google.dev/tutorials/rest_quickstart))
 - Local LLMs ([see example](https://github.com/sarfraznawaz2005/ai-team/blob/main/examples/LocalAI_Example.php))
 
-**LLM Signature**
+LLM Signature:
 
 ```php
 (string $apiKey, array $options = [])
@@ -223,11 +223,9 @@ $myTeam
 
 Execution Type can be `SequentialExecution` or `ParallelExecution`
 
-- [SequentialExecution](https://github.com/sarfraznawaz2005/ai-team/blob/main/src/Executions/SequentialExecution.php): In this mode, all members are run sequentially in the order passed to `addMembers` method.
-    In this mode, each members passes his result to next member as context and so on.
+- [SequentialExecution](https://github.com/sarfraznawaz2005/ai-team/blob/main/src/Executions/SequentialExecution.php): In this mode, all members are run sequentially in the order passed to `addMembers` method. In this mode, each members passes his result to next member as context and so on.
 
-- [ParallelExecution](https://github.com/sarfraznawaz2005/ai-team/blob/main/src/Executions/ParallelExecution.php): In this mode, all members perform thier tasks independently without passing any information
-    to next member. They just perform their assigned tasks and return the results individually.
+- [ParallelExecution](https://github.com/sarfraznawaz2005/ai-team/blob/main/src/Executions/ParallelExecution.php): In this mode, all members perform their tasks independently without passing any information to next member. They just perform their assigned tasks and return the results individually. Note that this mode doesn't work on Windows.
 
 To add your own execution types, implement [ExecutionInterface](https://github.com/sarfraznawaz2005/ai-team/blob/main/src/Contracts/ExecutionInterface.php) interface.
 
@@ -261,4 +259,4 @@ different and simple.
 
 Not recommended to be used in production, watch out for costs, use at your own risk!
 
-**Probably I won't be updating this package much (hence no release created) due to lack of time but I hope someoen in PHP community comes up with better and robust package for PHP. CrewAI is good starting point.**
+**Probably I won't be updating this package much (hence no release created) due to lack of time but I hope someone in PHP community comes up with better and robust package for PHP. CrewAI is good starting point.**
