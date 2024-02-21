@@ -144,7 +144,7 @@ In `$options`, it is possible to pass LLM settings such as `model`, `temperature
 
 ### Adding Your Own LLMs
 
-To add your own LLM providers, implement the `LLMProvider` interface:
+To add your own LLM providers, implement the [LLMProvider](https://github.com/sarfraznawaz2005/ai-team/blob/main/src/Contracts/LLMProvider.php) interface:
 
 ```php
 interface LLMProvider {
@@ -181,7 +181,7 @@ $awesomeMember = (new Member('Researcher', 'You are a Researcher', new GoogleGem
  });
 ```
 
-or pass a class that should implement `DataProviderInterface` interface:
+or pass a class that should implement [DataProviderInterface](https://github.com/sarfraznawaz2005/ai-team/blob/main/src/Contracts/DataProviderInterface.php) interface:
 
 ```php
 $awesomeMember = (new Member('Researcher', 'You are a Researcher', new GoogleGeminiAI($apiKey), true))
@@ -191,8 +191,8 @@ $awesomeMember = (new Member('Researcher', 'You are a Researcher', new GoogleGem
 
 Two built-in data providers are provided by the package:
 
-- *LLMDataProvider*: Provides results for given prompt by asking LLM model. [See Example](https://github.com/sarfraznawaz2005/ai-team/blob/main/examples/TripPlan_Example.php)
-- *UrlDataProvider*: Provides results for given URL by asking LLM model. [See Example](https://github.com/sarfraznawaz2005/ai-team/blob/main/examples/UrlResearch_Example.php)
+- [LLMDataProvider](https://github.com/sarfraznawaz2005/ai-team/blob/main/src/DataProviders/LLMDataProvider.php): Provides results for given prompt by asking LLM model. [See Example](https://github.com/sarfraznawaz2005/ai-team/blob/main/examples/TripPlan_Example.php)
+- [UrlDataProvider](https://github.com/sarfraznawaz2005/ai-team/blob/main/src/DataProviders/UrlDataProvider.php): Provides results for given URL by asking LLM model. [See Example](https://github.com/sarfraznawaz2005/ai-team/blob/main/examples/UrlResearch_Example.php)
 
 **Creating a Team**
 
@@ -201,8 +201,6 @@ Signature:
 ```php
 (string $overallGoal = '', LLMProvider $llmProvider = null)
 ```
-
-```php
 
 ```php
 $myTeam = new Team();
@@ -225,13 +223,13 @@ $myTeam
 
 Execution Type can be `SequentialExecution` or `ParallelExecution`
 
-- `SequentialExecution`: In this mode, all members are run sequentially in the order passed to `addMembers` method.
+- [SequentialExecution](https://github.com/sarfraznawaz2005/ai-team/blob/main/src/Executions/SequentialExecution.php): In this mode, all members are run sequentially in the order passed to `addMembers` method.
     In this mode, each members passes his result to next member as context and so on.
 
-- `ParallelExecution`: In this mode, all members perform thier tasks independently without passing any information
+- [ParallelExecution](https://github.com/sarfraznawaz2005/ai-team/blob/main/src/Executions/ParallelExecution.php): In this mode, all members perform thier tasks independently without passing any information
     to next member. They just perform their assigned tasks and return the results individually.
 
-To add your own execution types, implement `ExecutionInterface` interface.
+To add your own execution types, implement [ExecutionInterface](https://github.com/sarfraznawaz2005/ai-team/blob/main/src/Contracts/ExecutionInterface.php) interface.
 
 **Getting Final Results**
 
@@ -263,5 +261,4 @@ different and simple.
 
 Not recommended to be used in production, watch out for costs, use at your own risk!
 
-**Probably I won't be updating this package much due to lack of time but I hope someoen in PHP community comes up with better
-and robust package for PHP. CrewAI is good starting point.**
+**Probably I won't be updating this package much (hence no release created) due to lack of time but I hope someoen in PHP community comes up with better and robust package for PHP. CrewAI is good starting point.**

@@ -20,16 +20,16 @@ $Researcher = (new Member('Researcher', 'You are a Researcher', $localLLM, true)
     ->withData(function () {
         // this could come from your database or api for example.
         return <<<data
-		Name: Sachin Tendulkar:
+		Name: Sachin Tendulkar
 		Centuries: 100
 
-		Name: Ricky Ponting:
+		Name: Ricky Ponting
 		Centuries: 71
 
-		Name: Virat Kohli:
+		Name: Virat Kohli
 		100s: 70
 
-		Name: John Doe:
+		Name: John Doe
 		Centuries: 0
 		data;
     });
