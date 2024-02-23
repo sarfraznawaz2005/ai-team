@@ -17,7 +17,7 @@ $SoftwareEngineer = (new Member(
 Enemies keep coming from the top and as the time passes, game should get harder and enemies keep on coming they never stop. 
 Your final answer must be the html, css and javascript code, only the html, css and javascript code and nothing else.
 
-You will get $100 if you are able to create error-free, working and really playable game!
+You will get $1000 if you are able to create error-free, working and really playable game!
 
 Below are rules you must follow:
 - Make sure entire code is in SINGLE and in SAME index.html file.
