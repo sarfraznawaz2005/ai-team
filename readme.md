@@ -20,40 +20,37 @@ Here we create a team with overall goal along with two members assigned with tas
 
 ```php
 
-// our api key
 $apiKey = getenv('GEMINI_API_KEY');
 
 // define our team and overall goal
-$myTeam = new Team('Who is cricketer with most centuries?', new GoogleGeminiAI($apiKey));
+$myTeam = new Team('What is name of cricketer with most centuries?', new GoogleGeminiAI($apiKey));
 
-// define members with roles, goals and tasks with same or different LLMs
+// define members with roles, goals and tasks with same or different LLMs/AI models
 
-$Researcher = (new Member('Researcher', 'You are a Researcher', new GoogleGeminiAI($apiKey), true))
- ->assignTask(new Task("Provide the list of cricketers with more than one centuries."))
- ->withData(function () {
-  // this could come from your database or api for example.
-  return <<<data
-  Name: Sachin Tendulkar
-  Centuries: 100
+$Researcher = (new Member('Researcher', 'You are a Researcher', new GoogleGeminiAI($apiKey)))
+    ->assignTask('Provide the list of cricketers with more than one centuries.')
+    ->withData(function () {
+        // this could come from your database or api for example.
+        return <<<data
+        Name: Sachin Tendulkar
+        Centuries: 100
 
-  Name: Ricky Ponting
-  Centuries: 71
+        Name: Ricky Ponting
+        Centuries: 71
 
-  Name: Virat Kohli
-  100s: 70
+        Name: Virat Kohli
+        100s: 70
 
-  Name: John Doe
-  Centuries: 0
-  data;
- });
+        Name: John Doe
+        Centuries: 0
+        data;
+    });
 
-$Analyst = (new Member('Analyst', 'You are an Analyst', new GoogleGeminiAI($apiKey), true))
- ->assignTask(new Task('Retrieve the name of a cricketer with most centuries.'));
+$Analyst = (new Member('Analyst', 'You are an Analyst', new GoogleGeminiAI($apiKey)))
+    ->assignTask('Retrieve the name of a cricketer with most centuries.');
 
 // add members to the team
-$myTeam
- ->addMembers([$Researcher, $Analyst]) // order matters here in case of SequentialExecution
- ->withExecutionType(new SequentialExecution());
+$myTeam->addMembers([$Researcher, $Analyst]);
 
 // get team of members to do their work
 $result = $myTeam->performTasks();
@@ -64,60 +61,33 @@ echo $result;
 :raised_hands: Result:
 
 ```bash
-Researcher has started working...
+Researcher performing the task:
 
-Researcher proceeding with following details:
+Role: You are a Researcher
 
-ROLE: You are a Researcher
+Task: Provide the list of cricketers with more than one centuries.
 
-TASK: Provide the list of cricketers with more than one centuries.
-
-Information/Data:
-
-Name: Sachin Tendulkar
-Centuries: 100
-
-Name: Ricky Ponting
-Centuries: 71
-
-Name: Virat Kohli
-100s: 70
-
-Name: John Doe
-Centuries: 0
-
-Researcher has finished working with result:
-
-- Sachin Tendulkar (100 centuries)
-- Ricky Ponting (71 centuries)
-- Virat Kohli (70 centuries)
-
-Analyst has started working...
-
-Analyst proceeding with following details:
-
-ROLE: You are an Analyst
-
-TASK: Retrieve the name of a cricketer with most centuries.
-
-Analyst has finished working with result:
-
-Sachin Tendulkar
-
-Researcher's Findings:
+Researcher performed task with result:
 
 - Sachin Tendulkar (100 centuries)
 - Ricky Ponting (71 centuries)
 - Virat Kohli (70 centuries)
 
 
-Analyst's Findings:
+Analyst performing the task:
+
+Role: You are an Analyst
+
+Task: Retrieve the name of a cricketer with most centuries.
+
+Analyst performed task with result:
 
 Sachin Tendulkar
+
 
 FINAL TEAM RESULT:
 
-Sachin Tendulkar
+Cricketer with most centuries is Sachin Tendulkar
 ```
 
 [See more examples here](https://github.com/sarfraznawaz2005/ai-team/tree/main/examples)

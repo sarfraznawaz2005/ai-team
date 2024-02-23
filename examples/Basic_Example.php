@@ -10,9 +10,9 @@ use Sarfraznawaz2005\AiTeam\Team;
 $apiKey = getenv('GEMINI_API_KEY');
 
 // define our team and overall goal
-$myTeam = new Team('Please provide details about cricketer with most centuries.', new GoogleGeminiAI($apiKey));
+$myTeam = new Team('What is name of cricketer with most centuries?', new GoogleGeminiAI($apiKey));
 
-// define members with roles, goals and tasks with same or different AI models
+// define members with roles, goals and tasks with same or different LLMs/AI models
 
 $Researcher = (new Member('Researcher', 'You are a Researcher', new GoogleGeminiAI($apiKey)))
     ->assignTask('Provide the list of cricketers with more than one centuries.')
