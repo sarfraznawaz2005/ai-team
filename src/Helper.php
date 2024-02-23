@@ -36,7 +36,7 @@ class Helper
         return $styleCode . $colorCode . $text . $colors['reset'] . PHP_EOL . PHP_EOL;
     }
 
-    public static function outputText(string $text, string $color, string $style = ''): string
+    public static function outputText(string $text, string $color, string $style = ''): void
     {
         echo self::Text($text, $color, $style);
     }

@@ -94,9 +94,6 @@ class Team
             return Helper::Text('FINAL TEAM RESULT:', 'green', 'bold') . "\n$membersOverAllResult";
         }
 
-        // remove members instructions
-        $membersOverAllResult = str_ireplace(Member::INSTRUCTION_WORDS, '', $membersOverAllResult);
-
         $finalPrompt = $this->overallGoal . "\n\n" . self::INSTRUCTION_WORDS . "\n\n$membersOverAllResult";
 
         $finalResult = $this->llmProvider->generateText($finalPrompt);
