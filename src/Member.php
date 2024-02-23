@@ -131,7 +131,7 @@ class Member
         if ($this->verbose) {
             // let's not show feedback prompts
             // TODO: prompting texts should not be hard-coded in this class.
-            if (!str_contains(strtolower($roleTask), 're-write and correct your answer based on suggestions given')) {
+            if (!str_contains(strtolower($roleTask), 'your answer must not be sams as your last answer')) {
                 Helper::outputText($this->name . " performing the task:", 'green');
                 Helper::outputText($roleTask, 'yellow');
             }
