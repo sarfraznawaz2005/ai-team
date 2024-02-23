@@ -171,7 +171,7 @@ Two built-in data providers are provided by the package:
 Signature:
 
 ```php
-(string $overallGoal = '', LLMProvider $llmProvider = null, ExecutionInterface $execution = null, int $executionDelayMilliSeconds = 500)
+(string $overallGoal = '', LLMProvider $llmProvider = null, ExecutionInterface $execution = null, $executionDelayMilliSeconds = 500)
 ```
 
 ```php
@@ -225,7 +225,7 @@ Collaboration or communication between members to achieve given task can be enab
 It has following signature:
 
 ```php
-(array $members, int $maxFeedbacks = 3, int $feedbackDelayMilliSeconds = 2, bool $exitOnFailedFeedback = false)
+(array $members, $maxFeedbacks = 3, $feedbackDelayMilliSeconds = 2, $exitOnFailedFeedback = false)
 ```
 
 - `$members` specifies which members to collaborate with.
