@@ -5,12 +5,12 @@ namespace Sarfraznawaz2005\AiTeam;
 class Helper
 {
     /**
-     * @param $text
-     * @param $color
-     * @param $style
-     * @return mixed|string
+     * @param string $text
+     * @param string $color
+     * @param string $style
+     * @return string
      */
-    public static function Text($text, $color, $style = '')
+    public static function Text(string $text, string $color, string $style = ''): string
     {
         if (PHP_SAPI !== 'cli') {
             return $text;
@@ -36,24 +36,8 @@ class Helper
         return $styleCode . $colorCode . $text . $colors['reset'] . PHP_EOL . PHP_EOL;
     }
 
-    public static function ensureUtf8Encoding($data)
+    public static function outputText(string $text, string $color, string $style = ''): string
     {
-        if (extension_loaded('mbstring')) {
-            return $data;
-        }
-
-        if (is_string($data)) {
-            return mb_convert_encoding($data, 'UTF-8', 'UTF-8');
-        } elseif (is_array($data)) {
-            $result = [];
-
-            foreach ($data as $key => $value) {
-                $result[$key] = self::ensureUtf8Encoding($value);
-            }
-
-            return $result;
-        }
-
-        return $data;
+        echo self::Text($text, $color, $style);
     }
 }

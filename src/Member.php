@@ -98,16 +98,16 @@ class Member
         $prompt = $this->generatePrompt($this->task, $previousMemberResults);
 
         if (!is_null($this->data)) {
-            $prompt = $prompt . "\n\nInformation/Data:\n\n" . $this->data;
+            $prompt .= "\n\nInformation/Data:\n" . $this->data;
         }
 
-        //echo Helper::Text($prompt, 'blue');
+        //Helper::outputText($prompt, 'blue');
 
         $result = $this->getLLMResult($prompt);
 
         if ($this->verbose) {
-            echo Helper::Text($this->name . " performed task with result:", 'green');
-            echo Helper::Text("$result\n", 'white');
+            Helper::outputText($this->name . " performed task with result:", 'green');
+            Helper::outputText("$result\n", 'white');
         }
 
         $this->result = $result;
@@ -132,8 +132,8 @@ class Member
             // let's not show feedback prompts
             // TODO: prompting texts should not be hard-coded in this class.
             if (!str_contains(strtolower($roleTask), 're-write and correct your answer based on suggestions given')) {
-                echo Helper::Text($this->name . " performing the task:", 'green');
-                echo Helper::Text($roleTask, 'yellow');
+                Helper::outputText($this->name . " performing the task:", 'green');
+                Helper::outputText($roleTask, 'yellow');
             }
         }
 
@@ -146,7 +146,7 @@ class Member
 
         $prompt = $rules . PHP_EOL . PHP_EOL . $prompt;
 
-        //echo Helper::Text($prompt, 'blue', 'bold');
+        //Helper::outputText($prompt, 'blue', 'bold');
 
         return $this->llmProvider->generateText($prompt);
     }
@@ -165,7 +165,7 @@ class Member
                 $retryCount = 0;
 
                 if ($this->verbose) {
-                    echo Helper::Text("$this->name has entered into feedback loop with $member->name.", 'green');
+                    Helper::outputText("$this->name has entered into feedback loop with $member->name.", 'green');
                 }
 
                 do {
@@ -176,7 +176,7 @@ class Member
                         $retryCount++;
                     } else {
                         if ($this->verbose) {
-                            echo Helper::Text("$this->name finished the feedback loop with $member->name with no success!\n", 'red');
+                            Helper::outputText("$this->name finished the feedback loop with $member->name with no success!\n", 'red');
                         }
 
                         break;
@@ -186,13 +186,13 @@ class Member
 
                     if ($feedback->isSuccessful() && $this->verbose) {
                         if ($retryCount === 1) {
-                            echo Helper::Text("$this->name is satisfied with answer of $member->name!", 'green');
+                            Helper::outputText("$this->name is satisfied with answer of $member->name!", 'green');
                         } else {
-                            echo Helper::Text("Successful collaboration between $this->name and $member->name!", 'green');
-                            echo Helper::Text("$member->name has replied with satisfying answer!", 'green');
+                            Helper::outputText("Successful collaboration between $this->name and $member->name!", 'green');
+                            Helper::outputText("$member->name has replied with satisfying answer!", 'green');
                         }
 
-                        echo Helper::Text("$this->name exiting the feedback loop with $member->name.\n", 'green');
+                        Helper::outputText("$this->name exiting the feedback loop with $member->name.\n", 'green');
                         break;
                     }
 
@@ -201,7 +201,7 @@ class Member
                     }
 
                     if ($this->verbose) {
-                        echo Helper::Text("\nFeedback #$retryCount:", 'green');
+                        Helper::outputText("\nFeedback #$retryCount:", 'green');
                     }
 
                     // request member to re-evaluate his answer based on feedback
@@ -219,7 +219,7 @@ class Member
                     feedback;
 
                     $prompt = $member->generatePrompt($member->task . $feedbackPrompt);
-                    //echo Helper::Text($prompt, 'blue');
+                    //Helper::outputText($prompt, 'blue');
 
                     $result = $this->getLLMResult($prompt);
 
@@ -227,8 +227,8 @@ class Member
                     $member->result = $result;
 
                     if ($this->verbose) {
-                        echo Helper::Text("\n$member->name has replied with following updated answer:", 'green');
-                        echo Helper::Text($member->result, 'white');
+                        Helper::outputText("\n$member->name has replied with following updated answer:", 'green');
+                        Helper::outputText($member->result, 'white');
                     }
                 } while (!$feedback->isSuccessful());
             }
@@ -242,8 +242,8 @@ class Member
         #######################################################
 //        if (1) {
 //            if ($this->verbose) {
-//                echo Helper::Text("\n$this->name has provided following feedback to $member->name:", 'green');
-//                echo Helper::Text("\n" . 'code has a syntax error', 'yellow');
+//                Helper::outputText("\n$this->name has provided following feedback to $member->name:", 'green');
+//                Helper::outputText("\n" . 'code has a syntax error', 'yellow');
 //            }
 //
 //            return new Feedback(false, 'code has a syntax error');
@@ -295,8 +295,8 @@ class Member
         }
 
         if ($this->verbose) {
-            echo Helper::Text("\n$this->name has provided following feedback to $member->name:", 'green');
-            echo Helper::Text("\n" . $json['feedback'], 'yellow');
+            Helper::outputText("\n$this->name has provided following feedback to $member->name:", 'green');
+            Helper::outputText("\n" . $json['feedback'], 'yellow');
         }
 
         return new Feedback(str_contains(strtolower($json['impression']), 'positive'), $json['feedback']);
