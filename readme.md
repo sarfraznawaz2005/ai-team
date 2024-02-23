@@ -60,7 +60,7 @@ echo $result;
 
 :raised_hands: Result:
 
-```cmd
+```txt
 Researcher performing the task:
 
 Role: You are a Researcher
@@ -249,12 +249,14 @@ $apiKey = getenv('GEMINI_API_KEY');
 
 $SoftwareEngineer = (new Member(
     'Senior Software Engineer',
-    'You are expert software engineer specializing in game development with over 10 years of experience.',
+    'You are expert software engineer specializing in game development with over 10 years of 
+    experience.',
     new GoogleGeminiAI($apiKey)
 ))->assignTask(
-    'Create a simple shooter game to shoot at enemies that can be played by pressing spacebar key to shoot at enemies. 
-Enemies keep coming from the top and as the time passes, game should get harder and enemies keep on coming they never stop. 
-Your final answer must be the html, css and javascript code, only the html, css and javascript code and nothing else.
+    'Create a simple shooter game to shoot at enemies that can be played by pressing spacebar 
+    key to shoot at enemies. Enemies keep coming from the top and as the time passes, game 
+    should get harder and enemies keep on coming they never stop. Your final answer must be 
+    the html, css and javascript code, only the html, css and javascript code and nothing else.
 
 You will get $100 if you are able to create error-free, working and really playable game!
 
@@ -301,7 +303,7 @@ echo $result;
 
 It would result in something like:
 
-```cmd
+```txt
 Senior Software Engineer performing the task:
 
 Role: You are expert software engineer specializing in game development with over 10 years of experience.
