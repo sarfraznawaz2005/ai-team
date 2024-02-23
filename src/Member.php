@@ -207,12 +207,13 @@ class Member
                     // request member to re-evaluate his answer based on feedback
                     $feedbackPrompt = <<<feedback
                     \n\n
-                    Your last answer was:
+                    Your Last Answer:
                     \n > $member->result\n
                     ---
                     \n\n
                     However, you have received following feedback from $this->name, you must respect suggestions given.
-                    Please re-write and correct your answer based on suggestions given by $this->name below:
+                    Please first thank $this->name for his suggestions and then re-write and correct your answer based 
+                    on suggestions given by $this->name below. Your answer MUST not be sams as Your Last Answer.
                     \n\n
                     Suggestions By $this->name:
                     > $feedback->suggestion\n
@@ -262,7 +263,7 @@ class Member
         Please provide feedback to $feedbackMemberName whose answer is below.
         Your feedback must be realistic and correct without any assumptions and
         must only be based on answer given below by $feedbackMemberName. Please
-        never reply with 'no feedback';
+        never reply with 'No feedback.';
 
         ---
 
