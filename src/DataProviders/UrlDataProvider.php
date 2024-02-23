@@ -16,6 +16,11 @@ class UrlDataProvider implements DataProviderInterface
     private string $url;
     private string $customPrompt;
 
+    /**
+     * @param LLMProvider $llm
+     * @param string $url
+     * @param string $customPrompt
+     */
     public function __construct(LLMProvider $llm, string $url, string $customPrompt = '')
     {
         $this->llm = $llm;
@@ -23,6 +28,9 @@ class UrlDataProvider implements DataProviderInterface
         $this->customPrompt = $customPrompt;
     }
 
+    /**
+     * @throws AITeamException
+     */
     public function get(): string
     {
         // Validate the URL
@@ -58,7 +66,7 @@ class UrlDataProvider implements DataProviderInterface
         if ($this->customPrompt) {
             $prompt = <<<prompt
             $this->customPrompt
-    
+
             Analyze below content for your answer.
 
             Content:

@@ -14,6 +14,10 @@ class LLMDataProvider implements DataProviderInterface
     private LLMProvider $llm;
     private string $prompt;
 
+    /**
+     * @param LLMProvider $llm
+     * @param string $prompt
+     */
     public function __construct(LLMProvider $llm, string $prompt)
     {
         $this->llm = $llm;

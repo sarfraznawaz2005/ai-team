@@ -2,4 +2,6 @@
 
 namespace Sarfraznawaz2005\AiTeam\Exceptions;
 
-class AITeamException extends \Exception{}
+use Exception;
+
+class AITeamException extends Exception{}

@@ -8,14 +8,14 @@ use Sarfraznawaz2005\AiTeam\Member;
 /**
  * In this, each member passes his findings to next agent as context and so on.
  * Each member is run in order provided in Team's addMembers method.
- * 
+ *
  */
 class SequentialExecution implements ExecutionInterface
 {
     /**
      * @var int The delay time in milliseconds
      */
-    private $delayMilliSeconds;
+    private int $delayMilliSeconds;
 
     /**
      * SequentialExecution constructor.
@@ -35,6 +35,7 @@ class SequentialExecution implements ExecutionInterface
     {
         $results = [];
 
+        // let them perform tasks with any coordination
         foreach ($members as $index => $member) {
             usleep($this->delayMilliSeconds * 1000);
 
@@ -42,12 +43,28 @@ class SequentialExecution implements ExecutionInterface
             $previousResults = array_slice($results, 0, $index);
 
             // Perform the task using the previous results
-            $currentResult = $member->performTask($previousResults);
+            $member->performTask($previousResults);
+            $currentResult = $member->result;
 
             // Remove role info of previous members from current member's task
-            $currentResult = preg_replace('#' . $member->getRole() . '#', '', $currentResult);
+            $currentResult = preg_replace('#' . $member->role . '#', '', $currentResult);
 
-            $results[] = $currentResult;
+            if ($currentResult) {
+                if (!$member->excludeReply) {
+                    $results[$member->name] = $currentResult;
+                }
+            }
+        }
+
+        // get updated answer after any coordination
+        foreach ($members as $member) {
+            $result = $member->result;
+
+            if ($result) {
+                if (!$member->excludeReply) {
+                    $results[$member->name] = $result;
+                }
+            }
         }
 
         return $results;

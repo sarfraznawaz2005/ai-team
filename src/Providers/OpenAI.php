@@ -1,8 +1,10 @@
 <?php
+
 namespace Sarfraznawaz2005\AiTeam\Providers;
 
 use Sarfraznawaz2005\AiTeam\Contracts\LLMProvider;
 use Sarfraznawaz2005\AiTeam\Exceptions\AITeamException;
+use Sarfraznawaz2005\AiTeam\Helper;
 
 class OpenAI implements LLMProvider
 {
@@ -10,12 +12,19 @@ class OpenAI implements LLMProvider
 
     private array $options = ['model' => 'gpt-3.5-turbo', 'api_end_point' => 'https://api.openai.com/v1/chat/completions'];
 
+    /**
+     * @param string $apiKey
+     * @param array $options
+     */
     public function __construct(string $apiKey, array $options = [])
     {
         $this->apiKey = $apiKey;
         $this->options = array_merge($this->options, $options);
     }
 
+    /**
+     * @throws AITeamException
+     */
     public function generateText(string $prompt): string
     {
         $this->options['messages'] = [
@@ -26,7 +35,6 @@ class OpenAI implements LLMProvider
         ];
 
         $ch = curl_init($this->options['api_end_point']);
-
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($this->options));
@@ -48,7 +56,7 @@ class OpenAI implements LLMProvider
         if (isset($responseData['choices'][0]['message']['content'])) {
             return $responseData['choices'][0]['message']['content'];
         }
-        
+
         if (isset($responseData['error'])) {
             throw new AITeamException($responseData['error']['message']);
         }

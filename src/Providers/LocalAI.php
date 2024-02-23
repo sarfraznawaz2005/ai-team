@@ -4,6 +4,7 @@ namespace Sarfraznawaz2005\AiTeam\Providers;
 
 use Sarfraznawaz2005\AiTeam\Contracts\LLMProvider;
 use Sarfraznawaz2005\AiTeam\Exceptions\AITeamException;
+use Sarfraznawaz2005\AiTeam\Helper;
 
 class LocalAI implements LLMProvider
 {
@@ -11,12 +12,19 @@ class LocalAI implements LLMProvider
 
     private array $options = ['api_end_point' => ''];
 
+    /**
+     * @param string $apiKey
+     * @param array $options
+     */
     public function __construct(string $apiKey, array $options)
     {
         $this->apiKey = $apiKey;
         $this->options = array_merge($this->options, $options);
     }
 
+    /**
+     * @throws AITeamException
+     */
     public function generateText(string $prompt): string
     {
         $this->options['messages'] = [
@@ -31,7 +39,6 @@ class LocalAI implements LLMProvider
         }
 
         $ch = curl_init($this->options['api_end_point']);
-
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($this->options));

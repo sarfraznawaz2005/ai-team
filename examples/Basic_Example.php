@@ -2,10 +2,8 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Sarfraznawaz2005\AiTeam\Executions\SequentialExecution;
 use Sarfraznawaz2005\AiTeam\Member;
 use Sarfraznawaz2005\AiTeam\Providers\GoogleGeminiAI;
-use Sarfraznawaz2005\AiTeam\Task;
 use Sarfraznawaz2005\AiTeam\Team;
 
 // our api key
@@ -16,11 +14,11 @@ $myTeam = new Team('Who is cricketer with most centuries?', new GoogleGeminiAI($
 
 // define members with roles, goals and tasks with same or different AI models
 
-$Researcher = (new Member('Researcher', 'You are a Researcher', new GoogleGeminiAI($apiKey), true))
-	->assignTask(new Task("Provide the list of cricketers with more than one centuries."))
-	->withData(function () {
-		// this could come from your database or api for example.
-		return <<<data
+$Researcher = (new Member('Researcher', 'You are a Researcher', new GoogleGeminiAI($apiKey)))
+    ->assignTask('Provide the list of cricketers with more than one centuries.')
+    ->withData(function () {
+        // this could come from your database or api for example.
+        return <<<data
 		Name: Sachin Tendulkar
 		Centuries: 100
 
@@ -33,15 +31,13 @@ $Researcher = (new Member('Researcher', 'You are a Researcher', new GoogleGemini
 		Name: John Doe
 		Centuries: 0
 		data;
-	});
+    });
 
-$Analyst = (new Member('Analyst', 'You are an Analyst', new GoogleGeminiAI($apiKey), true))
-	->assignTask(new Task('Retrieve the name of a cricketer with most centuries.'));
+$Analyst = (new Member('Analyst', 'You are an Analyst', new GoogleGeminiAI($apiKey)))
+    ->assignTask('Retrieve the name of a cricketer with most centuries.');
 
 // add members to the team
-$myTeam
-	->addMembers([$Researcher, $Analyst]) // order matters here in case of SequentialExecution
-	->withExecutionType(new SequentialExecution());
+$myTeam->addMembers([$Researcher, $Analyst]);
 
 // get team of members to do their work
 $result = $myTeam->performTasks();

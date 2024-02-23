@@ -2,10 +2,8 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Sarfraznawaz2005\AiTeam\Executions\SequentialExecution;
 use Sarfraznawaz2005\AiTeam\Member;
 use Sarfraznawaz2005\AiTeam\Providers\GoogleGeminiAI;
-use Sarfraznawaz2005\AiTeam\Task;
 use Sarfraznawaz2005\AiTeam\Team;
 
 // our api key
@@ -26,10 +24,10 @@ $designer = (new Member(
     new GoogleGeminiAI($apiKey),
     true
 ))->assignTask(
-    new Task("Generate HTML and CSS for a modern Next.js website homepage. Include a responsive navbar, hero section with
+    "Generate HTML and CSS for a modern Next.js website homepage. Include a responsive navbar, hero section with
 	 a call-to-action button, a services section showcasing three services, a testimonial slider, and a footer. Focus on a
 	 clean, professional aesthetic suitable for a tech company. For images, use images placeholder service. Use cdn for css
-	 and js where possible.")
+	 and js where possible."
 );
 
 $softwareEngineer = (new Member(
@@ -38,16 +36,14 @@ $softwareEngineer = (new Member(
     new GoogleGeminiAI($apiKey),
     true
 ))->assignTask(
-    new Task('Translate the HTML and CSS provided by Web Designer into into Next.js components. Ensure the website is optimized
+    'Translate the HTML and CSS provided by Web Designer into into Next.js components. Ensure the website is optimized
 	 for performance. Implement dynamic rendering for the services section using server-side rendering for initial load and
-	 client-side rendering for interaction. Include a simple contact form in the footer that submits to a placeholder URL.')
+	 client-side rendering for interaction. Include a simple contact form in the footer that submits to a placeholder URL.'
 );
 
 // add members to the team
 
-$nextJSWebsiteteam
-    ->addMembers([$designer, $softwareEngineer]) // order matters here in case of SequentialExecution
-    ->withExecutionType(new SequentialExecution());
+$nextJSWebsiteteam->addMembers([$designer, $softwareEngineer]);
 
 // get team of members to do their work
 $result = $nextJSWebsiteteam->performTasks();

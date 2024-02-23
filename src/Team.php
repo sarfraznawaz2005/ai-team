@@ -2,62 +2,96 @@
 
 namespace Sarfraznawaz2005\AiTeam;
 
+use Exception;
 use Sarfraznawaz2005\AiTeam\Contracts\ExecutionInterface;
 use Sarfraznawaz2005\AiTeam\Contracts\LLMProvider;
+use Sarfraznawaz2005\AiTeam\Executions\SequentialExecution;
 
 class Team
 {
     private ?LLMProvider $llmProvider;
-    private ExecutionInterface $execution;
-
-    /**
-     * @param Member[] Array of members
-     */
-    private $members = [];
-
+    private ?ExecutionInterface $execution;
     private string $overallGoal;
 
-    public const INSTRUCTION_WORDS = "Build your answer based on findings in following Context:\n\nContext:";
-
-    public function __construct(string $overallGoal = '', LLMProvider $llmProvider = null)
-    {
-        $this->overallGoal = $overallGoal;
-        $this->llmProvider = $llmProvider;
-    }
-
-    public function withExecutionType(ExecutionInterface $execution)
-    {
-        $this->execution = $execution;
-
-        return $this;
-    }
-
-    /**
-     * @param Member[] Array of members
-     */
-    public function addMembers(array $members)
-    {
-        $this->members = $members;
-
-        return $this;
-    }
+    private const INSTRUCTION_WORDS = "Build your answer based on findings in following Context:\n\nContext:";
 
     /**
      * @param Member[] $members Array of members
      */
-    public function getMembers()
+    private array $members = [];
+
+    /**
+     * @param string $overallGoal
+     * @param LLMProvider|null $llmProvider
+     * @param ExecutionInterface|null $execution
+     * @param int $executionDelayMilliSeconds delay time between members before getting result of each member
+     */
+    public function __construct(string $overallGoal = '', LLMProvider $llmProvider = null, ExecutionInterface $execution = null, int $executionDelayMilliSeconds = 500)
     {
-        return $this->members;
+        $this->overallGoal = $overallGoal;
+        $this->llmProvider = $llmProvider;
+        $this->execution = $execution ?: new SequentialExecution($executionDelayMilliSeconds);
+
+        $this->aiTEamLogo();
     }
 
-    public function performTasks()
+    private function aiTEamLogo(): void
     {
+        echo "
+         █████  ██       ████████ ███████  █████  ███    ███ 
+        ██   ██ ██          ██    ██      ██   ██ ████  ████ 
+        ███████ ██ █████    ██    █████   ███████ ██ ████ ██ 
+        ██   ██ ██          ██    ██      ██   ██ ██  ██  ██ 
+        ██   ██ ██          ██    ███████ ██   ██ ██      ██         
+        \n\n";
+    }
+
+    /**
+     * @param Member[] $members Array of members
+     * @throws Exception If a member with the same name already exists
+     */
+    public function addMembers(array $members): static
+    {
+        foreach ($members as $member) {
+            $name = $member->name;
+
+            foreach ($this->members as $existingMember) {
+                if ($existingMember->name === $name) {
+                    throw new Exception("Member with name '$name' already exists.");
+                }
+            }
+
+            $this->members[] = $member;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Member[] $resultExcludeMembers Array of members
+     * @return $this
+     */
+    public function excludeResults(array $resultExcludeMembers): static
+    {
+        foreach ($resultExcludeMembers as $member) {
+            $member->excludeReply = true;
+        }
+
+        return $this;
+    }
+
+    public function performTasks(): string
+    {
+        $membersOverAllResult = '';
+
         $results = $this->execution->executeWork($this->members);
 
-        $membersOverAllResult = implode(PHP_EOL, $results);
+        foreach ($results as $memberName => $memberResult) {
+            $membersOverAllResult .= "$memberName:\n\n$memberResult\n\n";
+        }
 
         if (!$this->overallGoal) {
-            return 'FINAL TEAM RESULT:' . $membersOverAllResult . PHP_EOL . PHP_EOL;
+            return Helper::Text('FINAL TEAM RESULT:', 'green', 'bold') . "\n$membersOverAllResult";
         }
 
         // remove members instructions
@@ -68,8 +102,6 @@ class Team
         $finalResult = $this->llmProvider->generateText($finalPrompt);
 
         // append members result
-        $finalResult = $membersOverAllResult . PHP_EOL . PHP_EOL . Helper::Text('FINAL TEAM RESULT:', 'green', 'bold') . $finalResult . PHP_EOL . PHP_EOL;
-
-        return $finalResult;
+        return "$membersOverAllResult\n\n" . Helper::Text('FINAL TEAM RESULT:', 'green', 'bold') . "$finalResult\n";
     }
 }

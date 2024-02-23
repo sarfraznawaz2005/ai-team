@@ -4,6 +4,7 @@ namespace Sarfraznawaz2005\AiTeam\Providers;
 
 use Sarfraznawaz2005\AiTeam\Contracts\LLMProvider;
 use Sarfraznawaz2005\AiTeam\Exceptions\AITeamException;
+use Sarfraznawaz2005\AiTeam\Helper;
 
 class GoogleGeminiAI implements LLMProvider
 {
@@ -11,13 +12,20 @@ class GoogleGeminiAI implements LLMProvider
 
     private array $options = ['model' => 'gemini-pro', 'api_end_point' => 'https://generativelanguage.googleapis.com/v1/models/'];
 
-    // see on how to pass further model options: https://ai.google.dev/tutorials/rest_quickstart
+    /**
+     * @param string $apiKey
+     * @param array $options
+     * @see https://ai.google.dev/tutorials/rest_quickstart
+     */
     public function __construct(string $apiKey, array $options = [])
     {
         $this->apiKey = $apiKey;
         $this->options = array_merge($this->options, $options);
     }
 
+    /**
+     * @throws AITeamException
+     */
     public function generateText(string $prompt): string
     {
         $this->options['contents'] = [
@@ -29,13 +37,16 @@ class GoogleGeminiAI implements LLMProvider
 
         $apiUrl = $this->options['api_end_point'] . $this->options['model'] . ':generateContent?key=' . $this->apiKey;
 
-        unset($this->options['api_end_point']);
+        $postFields = $this->options;
+
+        if (isset($postFields['api_end_point'])) {
+            unset($postFields['api_end_point']);
+        }
 
         $ch = curl_init($apiUrl);
-
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($this->options));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postFields));
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Content-Type: application/json',
         ]);

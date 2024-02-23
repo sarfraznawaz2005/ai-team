@@ -3,10 +3,8 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Sarfraznawaz2005\AiTeam\DataProviders\LLMDataProvider;
-use Sarfraznawaz2005\AiTeam\Executions\SequentialExecution;
 use Sarfraznawaz2005\AiTeam\Member;
 use Sarfraznawaz2005\AiTeam\Providers\GoogleGeminiAI;
-use Sarfraznawaz2005\AiTeam\Task;
 use Sarfraznawaz2005\AiTeam\Team;
 
 // our api key
@@ -26,7 +24,7 @@ $cityExpert = (new Member(
     new GoogleGeminiAI($apiKey),
     true
 ))
-    ->assignTask(new Task('Come up with best city in provided country to visit based on weather, season and prices.'))
+    ->assignTask('Come up with best city in provided country to visit based on weather, season and prices.')
     ->withData(function () use ($apiKey, $country) {
 
         // using built-in LLMDataProvider to provide some context data to our member using format we want.
@@ -43,20 +41,18 @@ $localCityExpert = (new Member(
     'A knowledgeable local guide with extensive information about the city',
     new GoogleGeminiAI($apiKey),
     true
-))->assignTask(new Task('Provide any further information about selected city that is important to know.'));
+))->assignTask('Provide any further information about selected city that is important to know.');
 
 $safetyExpert = (new Member(
     'City Safety Expert',
     'You are expert of all cities of world providing information about safety precautions of a city in different countries.',
     new GoogleGeminiAI($apiKey),
     true
-))->assignTask(new Task('Provide travel advisory and safety precautions for selected city'));
+))->assignTask('Provide travel advisory and safety precautions for selected city');
 
 // add members to the team
 
-$tripPlanningteam
-    ->addMembers([$cityExpert, $localCityExpert, $safetyExpert]) // order matters here in case of SequentialExecution
-    ->withExecutionType(new SequentialExecution());
+$tripPlanningteam->addMembers([$cityExpert, $localCityExpert, $safetyExpert]);
 
 // get team of members to do their work
 $result = $tripPlanningteam->performTasks();
