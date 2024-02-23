@@ -16,13 +16,11 @@ $country = readline("Which country do you want to visit ?\n");
 // define our team and overall goal
 $tripPlanningteam = new Team("Suggest best city to visit in $country", new GoogleGeminiAI($apiKey));
 
-// define members with roles, goals and tasks with same or different AI models
-
+// members
 $cityExpert = (new Member(
     'City Selection Expert',
     "You are an expert in analyzing travel data to pick ideal destinations in $country",
-    new GoogleGeminiAI($apiKey),
-    true
+    new GoogleGeminiAI($apiKey)
 ))
     ->assignTask('Come up with best city in provided country to visit based on weather, season and prices.')
     ->withData(function () use ($apiKey, $country) {
@@ -39,15 +37,13 @@ $cityExpert = (new Member(
 $localCityExpert = (new Member(
     'Local City Expert',
     'A knowledgeable local guide with extensive information about the city',
-    new GoogleGeminiAI($apiKey),
-    true
+    new GoogleGeminiAI($apiKey)
 ))->assignTask('Provide any further information about selected city that is important to know.');
 
 $safetyExpert = (new Member(
     'City Safety Expert',
     'You are expert of all cities of world providing information about safety precautions of a city in different countries.',
-    new GoogleGeminiAI($apiKey),
-    true
+    new GoogleGeminiAI($apiKey)
 ))->assignTask('Provide travel advisory and safety precautions for selected city');
 
 // add members to the team

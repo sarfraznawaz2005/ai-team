@@ -42,17 +42,15 @@ class SequentialExecution implements ExecutionInterface
             // Get the previous results
             $previousResults = array_slice($results, 0, $index);
 
-            // Perform the task using the previous results
+            // Pass the result of last member to next member
             $member->performTask($previousResults);
             $currentResult = $member->result;
 
             // Remove role info of previous members from current member's task
             $currentResult = preg_replace('#' . $member->role . '#', '', $currentResult);
 
-            if ($currentResult) {
-                if (!$member->excludeReply) {
-                    $results[$member->name] = $currentResult;
-                }
+            if ($currentResult && !$member->excludeReply) {
+                $results[$member->name] = $currentResult;
             }
         }
 
@@ -60,10 +58,8 @@ class SequentialExecution implements ExecutionInterface
         foreach ($members as $member) {
             $result = $member->result;
 
-            if ($result) {
-                if (!$member->excludeReply) {
-                    $results[$member->name] = $result;
-                }
+            if ($result && !$member->excludeReply) {
+                $results[$member->name] = $result;
             }
         }
 

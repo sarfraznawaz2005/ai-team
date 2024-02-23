@@ -20,7 +20,7 @@ Your final answer must be the html, css and javascript code, only the html, css 
 You will get $100 if you are able to create error-free, working and really playable game!
 
 Below are rules you must follow:
-- Make sure entire code is in SINGLE and SAME index.html file.
+- Make sure entire code is in SINGLE and in SAME index.html file.
 - Do not use external packages or libraries.
 - Game boundaries must inside window boundaries.
 - Do not assume anything and provide full working code without comments.

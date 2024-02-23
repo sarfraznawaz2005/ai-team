@@ -101,7 +101,6 @@ class Team
 
         $finalResult = $this->llmProvider->generateText($finalPrompt);
 
-        // append members result
-        return "$membersOverAllResult\n\n" . Helper::Text('FINAL TEAM RESULT:', 'green', 'bold') . "$finalResult\n";
+        return Helper::Text('FINAL TEAM RESULT:', 'green', 'bold') . "$finalResult\n";
     }
 }

@@ -9,7 +9,7 @@ Your final answer must be the html, css and javascript code, only the html, css 
 You will get $100 if you are able to create error-free, working and really playable game!
 
 Below are rules you must follow:
-- Make sure entire code is in SINGLE and SAME index.html file.
+- Make sure entire code is in SINGLE and in SAME index.html file.
 - Do not use external packages or libraries.
 - Game boundaries must inside window boundaries.
 - Do not assume anything and provide full working code without comments.
@@ -21,164 +21,163 @@ Senior Software Engineer performed task with result:
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Space Shooter</title>
+  <title>Simple Shooter Game</title>
   <style>
     body {
       background-color: black;
-      overflow: hidden;
+      margin: 0;
+      padding: 0;
     }
     canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
+      display: block;
     }
   </style>
 </head>
 <body>
   <canvas id="canvas" width="800" height="600"></canvas>
-
   <script>
-    // Create the canvas and context
+    // create the canvas and context
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
 
-    // Create the player's ship
+    // create the player
     var player = {
       x: canvas.width / 2,
       y: canvas.height - 50,
       width: 50,
       height: 50,
-      speed: 10
+      color: "white"
     };
 
-    // Create the enemies
-    var enemies = [];
-    for (var i = 0; i < 10; i++) {
-      enemies.push({
-        x: Math.random() * canvas.width,
-        y: 0,
-        width: 50,
-        height: 50,
-        speed: Math.random() * 5 + 1
-      });
-    }
-
-    // Create the bullets
+    // create the bullets
     var bullets = [];
 
-    // Update the game state
-    function update() {
-      // Move the player's ship
-      if (keys[37]) {
-        player.x -= player.speed;
-      }
-      if (keys[39]) {
-        player.x += player.speed;
-      }
+    // create the enemies
+    var enemies = [];
 
-      // Move the enemies
-      for (var i = 0; i < enemies.length; i++) {
-        enemies[i].y += enemies[i].speed;
+    // create the score
+    var score = 0;
 
-        // If the enemy reaches the bottom of the screen, remove it
-        if (enemies[i].y > canvas.height) {
-          enemies.splice(i, 1);
-        }
-      }
+    // add event listeners
+    document.addEventListener("keydown", keyDownHandler);
+    document.addEventListener("keyup", keyUpHandler);
 
-      // Move the bullets
+    // game loop
+    function gameLoop() {
+      // clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // draw the player
+      ctx.fillStyle = player.color;
+      ctx.fillRect(player.x, player.y, player.width, player.height);
+
+      // draw the bullets
       for (var i = 0; i < bullets.length; i++) {
-        bullets[i].y -= bullets[i].speed;
-
-        // If the bullet reaches the top of the screen, remove it
-        if (bullets[i].y < 0) {
-          bullets.splice(i, 1);
-        }
+        var bullet = bullets[i];
+        ctx.fillStyle = "white";
+        ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
       }
 
-      // Check for collisions between the player's ship and the enemies
+      // draw the enemies
       for (var i = 0; i < enemies.length; i++) {
-        if (player.x + player.width > enemies[i].x && player.x < enemies[i].x + enemies[i].width && player.y + player.height > enemies[i].y && player.y < enemies[i].y + enemies[i].height) {
-          alert("Game Over!");
-          document.location.reload();
-        }
+        var enemy = enemies[i];
+        ctx.fillStyle = enemy.color;
+        ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
       }
 
-      // Check for collisions between the player's bullets and the enemies
+      // update the score
+      ctx.font = "20px Arial";
+      ctx.fillStyle = "white";
+      ctx.fillText("Score: " + score, 10, 20);
+
+      // update the player
+      if (rightPressed) {
+        player.x += 5;
+      }
+      if (leftPressed) {
+        player.x -= 5;
+      }
+
+      // update the bullets
       for (var i = 0; i < bullets.length; i++) {
+        var bullet = bullets[i];
+        bullet.y -= 5;
+      }
+
+      // update the enemies
+      for (var i = 0; i < enemies.length; i++) {
+        var enemy = enemies[i];
+        enemy.y += 2;
+      }
+
+      // check for collisions
+      for (var i = 0; i < bullets.length; i++) {
+        var bullet = bullets[i];
         for (var j = 0; j < enemies.length; j++) {
-          if (bullets[i].x + bullets[i].width > enemies[j].x && bullets[i].x < enemies[j].x + enemies[j].width && bullets[i].y + bullets[i].height > enemies[j].y && bullets[i].y < enemies[j].y + enemies[j].height) {
-            // Remove the bullet and the enemy
-            bullets.splice(i, 1);
+          var enemy = enemies[j];
+          if (bullet.x > enemy.x && bullet.x < enemy.x + enemy.width && bullet.y > enemy.y && bullet.y < enemy.y + enemy.height) {
+            score += 10;
             enemies.splice(j, 1);
+            bullets.splice(i, 1);
+            break;
           }
         }
       }
 
-      // Add new enemies
+      // check for game over
+      for (var i = 0; i < enemies.length; i++) {
+        var enemy = enemies[i];
+        if (enemy.y > canvas.height) {
+          alert("Game Over! Your score was " + score);
+          document.location.reload();
+        }
+      }
+
+      // create new enemies
       if (Math.random() < 0.01) {
-        enemies.push({
-          x: Math.random() * canvas.width,
+        var enemy = {
+          x: Math.random() * (canvas.width - 50),
           y: 0,
           width: 50,
           height: 50,
-          speed: Math.random() * 5 + 1
-        });
-      }
-    }
-
-    // Draw the game state
-    function draw() {
-      // Clear the canvas
-      ctx.fillStyle = "black";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Draw the player's ship
-      ctx.fillStyle = "white";
-      ctx.fillRect(player.x, player.y, player.width, player.height);
-
-      // Draw the enemies
-      for (var i = 0; i < enemies.length; i++) {
-        ctx.fillStyle = "red";
-        ctx.fillRect(enemies[i].x, enemies[i].y, enemies[i].width, enemies[i].height);
+          color: "red"
+        };
+        enemies.push(enemy);
       }
 
-      // Draw the bullets
-      for (var i = 0; i < bullets.length; i++) {
-        ctx.fillStyle = "white";
-        ctx.fillRect(bullets[i].x, bullets[i].y, bullets[i].width, bullets[i].height);
-      }
-    }
-
-    // Listen for key presses
-    var keys = [];
-    document.addEventListener("keydown", function(e) {
-      keys[e.keyCode] = true;
-    });
-    document.addEventListener("keyup", function(e) {
-      keys[e.keyCode] = false;
-    });
-
-    // Listen for spacebar press to fire a bullet
-    document.addEventListener("keydown", function(e) {
-      if (e.keyCode == 32) {
-        bullets.push({
-          x: player.x + player.width / 2,
-          y: player.y,
-          width: 5,
-          height: 10,
-          speed: 10
-        });
-      }
-    });
-
-    // Start the game loop
-    function gameLoop() {
-      update();
-      draw();
+      // requestAnimationFrame
       requestAnimationFrame(gameLoop);
     }
-    gameLoop();
+
+    // key down handler
+    function keyDownHandler(e) {
+      if (e.keyCode == 32) {
+        var bullet = {
+          x: player.x + player.width / 2,
+          y: player.y,
+          width: 10,
+          height: 10,
+          color: "white"
+        };
+        bullets.push(bullet);
+      }
+      if (e.keyCode == 39) {
+        rightPressed = true;
+      }
+      if (e.keyCode == 37) {
+        leftPressed = true;
+      }
+    }
+
+    // key up handler
+    function keyUpHandler(e) {
+      if (e.keyCode == 39) {
+        rightPressed = false;
+      }
+      if (e.keyCode == 37) {
+        leftPressed = false;
+      }
+    }
   </script>
 </body>
 </html>
@@ -187,27 +186,21 @@ Senior Software Engineer performed task with result:
 
 Senior Code Reviewer has entered into feedback loop with Senior Software Engineer.
 
-Senior Software Engineer's answer is already satisfying!
+Senior Code Reviewer performing the task:
 
-Exiting the feedback loop with Senior Software Engineer.
+Role: You are expert code reviewer.
+
+Task: Your job is to do code review of code written by software engineer and make sure it has no errors.
+        If it has errors, you should fix those and provide corrected code in its entirety.
 
 
-Senior QA Engineer has entered into feedback loop with Senior Software Engineer.
+Senior Code Reviewer has provided following feedback to Senior Software Engineer:
+
+
+Seems like game is not working properly, fix the code so that it works as expected.
 
 
 Feedback #1:
-
-
-Senior QA Engineer has provided following feedback to Senior Software Engineer:
-
-
-The provided code has a number of issues that prevent it from being a playable game:
-
-1. Enemy movement is entirely vertical, making the game very easy. Enemies should move in both the horizontal and vertical directions to make the game more challenging and engaging.
-2. The firing rate of the player's ship is unlimited, allowing the player to easily defeat enemies without much skill or strategy. A limited firing rate would add an element of challenge and require the player to aim carefully.
-3. The game does not keep track of the player's score, which is a common feature in shoot'em up games. Adding a score counter would give the player a sense of progression and achievement.
-4. The game does not have any sound effects or music, which can significantly enhance the player's experience. Adding sound effects and music would make the game more immersive and enjoyable.
-5. The game does not have any visual effects, such as explosions or enemy death animations. Adding visual effects would make the game more visually appealing and engaging.
 
 
 Senior Software Engineer has replied with following updated answer:
@@ -418,223 +411,51 @@ Senior Software Engineer has replied with following updated answer:
 </html>
 ```
 
-Successful collaboration between Senior QA Engineer and Senior Software Engineer!
+Senior Code Reviewer performing the task:
 
-Senior Software Engineer has replied with following corrected answer:
+Role: You are expert code reviewer.
 
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Space Shooter</title>
-  <style>
-    body {
-      background-color: black;
-      overflow: hidden;
-    }
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-  </style>
-</head>
-<body>
-  <canvas id="canvas" width="800" height="600"></canvas>
+Task: Your job is to do code review of code written by software engineer and make sure it has no errors.
+        If it has errors, you should fix those and provide corrected code in its entirety.
 
-  <script>
-    // Create the canvas and context
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
 
-    // Create the player's ship
-    var player = {
-      x: canvas.width / 2,
-      y: canvas.height - 50,
-      width: 50,
-      height: 50,
-      speed: 10,
-      lives: 3
-    };
+Senior Code Reviewer has provided following feedback to Senior Software Engineer:
 
-    // Create the enemies
-    var enemies = [];
-    for (var i = 0; i < 10; i++) {
-      enemies.push({
-        x: Math.random() * canvas.width,
-        y: 0,
-        width: 50,
-        height: 50,
-        speed: Math.random() * 5 + 1,
-        direction: Math.random() * 2 * Math.PI
-      });
-    }
 
-    // Create the bullets
-    var bullets = [];
+No feedback
 
-    // Create the score counter
-    var score = 0;
+Successful collaboration between Senior Code Reviewer and Senior Software Engineer!
 
-    // Create the sound effects
-    var shootSound = new Audio("shoot.wav");
-    var explosionSound = new Audio("explosion.wav");
+Senior Software Engineer has replied with satisfying answer!
 
-    // Update the game state
-    function update() {
-      // Move the player's ship
-      if (keys[37]) {
-        player.x -= player.speed;
-      }
-      if (keys[39]) {
-        player.x += player.speed;
-      }
+Senior Code Reviewer exiting the feedback loop with Senior Software Engineer.
 
-      // Move the enemies
-      for (var i = 0; i < enemies.length; i++) {
-        enemies[i].x += Math.cos(enemies[i].direction) * enemies[i].speed;
-        enemies[i].y += Math.sin(enemies[i].direction) * enemies[i].speed;
 
-        // If the enemy reaches the bottom of the screen, remove it and reduce player lives
-        if (enemies[i].y > canvas.height) {
-          enemies.splice(i, 1);
-          player.lives--;
-        }
+Senior QA Engineer has entered into feedback loop with Senior Software Engineer.
 
-        // If the enemy reaches the left or right edge of the screen, change its direction
-        if (enemies[i].x < 0 || enemies[i].x > canvas.width) {
-          enemies[i].direction = Math.random() * 2 * Math.PI;
-        }
-      }
+Senior QA Engineer performing the task:
 
-      // Move the bullets
-      for (var i = 0; i < bullets.length; i++) {
-        bullets[i].y -= bullets[i].speed;
+Role: You are expert QA Engineer
 
-        // If the bullet reaches the top of the screen, remove it
-        if (bullets[i].y < 0) {
-          bullets.splice(i, 1);
-        }
-      }
+Task: Senior Code Reviewer will provide you code for a game, your job is to make sure game is playable
+     and you have no errors. Otherwise list the issues you identify.
 
-      // Check for collisions between the player's ship and the enemies
-      for (var i = 0; i < enemies.length; i++) {
-        if (player.x + player.width > enemies[i].x && player.x < enemies[i].x + enemies[i].width && player.y + player.height > enemies[i].y && player.y < enemies[i].y + enemies[i].height) {
-          explosionSound.play();
-          player.lives--;
-          enemies.splice(i, 1);
-        }
-      }
 
-      // Check for collisions between the player's bullets and the enemies
-      for (var i = 0; i < bullets.length; i++) {
-        for (var j = 0; j < enemies.length; j++) {
-          if (bullets[i].x + bullets[i].width > enemies[j].x && bullets[i].x < enemies[j].x + enemies[j].width && bullets[i].y + bullets[i].height > enemies[j].y && bullets[i].y < enemies[j].y + enemies[j].height) {
-            // Remove the bullet and the enemy
-            bullets.splice(i, 1);
-            enemies.splice(j, 1);
+Senior QA Engineer has provided following feedback to Senior Software Engineer:
 
-            // Increase the score
-            score += 10;
-          }
-        }
-      }
 
-      // Add new enemies
-      if (Math.random() < 0.01) {
-        enemies.push({
-          x: Math.random() * canvas.width,
-          y: 0,
-          width: 50,
-          height: 50,
-          speed: Math.random() * 5 + 1,
-          direction: Math.random() * 2 * Math.PI
-        });
-      }
-    }
+Well done.
 
-    // Draw the game state
-    function draw() {
-      // Clear the canvas
-      ctx.fillStyle = "black";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+Senior QA Engineer is satisfied with answer of Senior Software Engineer!
 
-      // Draw the player's ship
-      ctx.fillStyle = "white";
-      ctx.fillRect(player.x, player.y, player.width, player.height);
-
-      // Draw the enemies
-      for (var i = 0; i < enemies.length; i++) {
-        ctx.fillStyle = "red";
-        ctx.fillRect(enemies[i].x, enemies[i].y, enemies[i].width, enemies[i].height);
-      }
-
-      // Draw the bullets
-      for (var i = 0; i < bullets.length; i++) {
-        ctx.fillStyle = "white";
-        ctx.fillRect(bullets[i].x, bullets[i].y, bullets[i].width, bullets[i].height);
-      }
-
-      // Draw the score
-      ctx.fillStyle = "white";
-      ctx.font = "20px Arial";
-      ctx.fillText("Score: " + score, 10, 20);
-
-      // Draw the lives
-      ctx.fillStyle = "white";
-      ctx.font = "20px Arial";
-      ctx.fillText("Lives: " + player.lives, 10, 40);
-
-      // Draw game over message if player has no lives left
-      if (player.lives <= 0) {
-        ctx.fillStyle = "white";
-        ctx.font = "50px Arial";
-        ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
-      }
-    }
-
-    // Listen for key presses
-    var keys = [];
-    document.addEventListener("keydown", function(e) {
-      keys[e.keyCode] = true;
-    });
-    document.addEventListener("keyup", function(e) {
-      keys[e.keyCode] = false;
-    });
-
-    // Listen for spacebar press to fire a bullet
-    document.addEventListener("keydown", function(e) {
-      if (e.keyCode == 32) {
-        shootSound.play();
-        bullets.push({
-          x: player.x + player.width / 2,
-          y: player.y,
-          width: 5,
-          height: 10,
-          speed: 10
-        });
-      }
-    });
-
-    // Start the game loop
-    function gameLoop() {
-      update();
-      draw();
-      requestAnimationFrame(gameLoop);
-    }
-    gameLoop();
-  </script>
-</body>
-</html>
-```
-
-Exiting the feedback loop with Senior Software Engineer.
+Senior QA Engineer exiting the feedback loop with Senior Software Engineer.
 
 
 FINAL TEAM RESULT:
 
 
 Senior Software Engineer:
+
 ```html
 <!DOCTYPE html>
 <html>

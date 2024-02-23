@@ -21,8 +21,7 @@ $nextJSWebsiteteam = new Team(
 $designer = (new Member(
     'Web Designer',
     'You are Expert Web Designer with over 10 years of experience.',
-    new GoogleGeminiAI($apiKey),
-    true
+    new GoogleGeminiAI($apiKey)
 ))->assignTask(
     "Generate HTML and CSS for a modern Next.js website homepage. Include a responsive navbar, hero section with
 	 a call-to-action button, a services section showcasing three services, a testimonial slider, and a footer. Focus on a
@@ -33,8 +32,7 @@ $designer = (new Member(
 $softwareEngineer = (new Member(
     'Software Engineer',
     'You are Expert Software Engineer with over 10 years of experience.',
-    new GoogleGeminiAI($apiKey),
-    true
+    new GoogleGeminiAI($apiKey)
 ))->assignTask(
     'Translate the HTML and CSS provided by Web Designer into into Next.js components. Ensure the website is optimized
 	 for performance. Implement dynamic rendering for the services section using server-side rendering for initial load and

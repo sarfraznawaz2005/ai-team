@@ -9,7 +9,7 @@ use Sarfraznawaz2005\AiTeam\Providers\GoogleGeminiAI;
 // our api key
 $apiKey = getenv('GEMINI_API_KEY');
 
-$Researcher = (new Member('Researcher', 'You are a Researcher', new GoogleGeminiAI($apiKey), true))
+$Researcher = (new Member('Researcher', 'You are a Researcher', new GoogleGeminiAI($apiKey)))
     ->assignTask('Provide the list of top 5 news items from proivded data related to technology especially.')
     ->withData(function () use ($apiKey) {
 
