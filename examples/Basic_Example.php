@@ -10,7 +10,7 @@ use Sarfraznawaz2005\AiTeam\Team;
 $apiKey = getenv('GEMINI_API_KEY');
 
 // define our team and overall goal
-$myTeam = new Team('What is name of cricketer with most centuries?', new GoogleGeminiAI($apiKey));
+$myTeam = new Team('Provide short introduction of the cricketer.', new GoogleGeminiAI($apiKey));
 
 // define members with roles, goals and tasks with same or different LLMs/AI models
 
