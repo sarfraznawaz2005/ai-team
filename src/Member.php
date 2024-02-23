@@ -211,8 +211,8 @@ class Member
                     \n > $member->result\n
                     ---
                     \n\n
-                    However, you have received following feedback from $this->name, you must respect suggestions given
-                    and re-write and correct your answer based on suggestions given by $this->name:
+                    However, you have received following feedback from $this->name, you must respect suggestions given.
+                    Please re-write and correct your answer based on suggestions given by $this->name below:
                     \n\n
                     Suggestions By $this->name:
                     > $feedback->suggestion\n
@@ -286,12 +286,12 @@ class Member
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             // skip in case of errors
-            return new Feedback(true);
+            return new Feedback(true, "Everything looks good to me!");
         }
 
         // nothing to do if no suggestion
         if (!trim($json['feedback'])) {
-            return new Feedback(true);
+            return new Feedback(true, "Everything looks good to me!");
         }
 
         if ($this->verbose) {
