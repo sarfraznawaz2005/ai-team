@@ -44,7 +44,7 @@ class SequentialExecution implements ExecutionInterface
 
             // Pass the result of last member to next member
             $member->performTask($previousResults);
-            $currentResult = $member->result;
+            $currentResult = $member->getResult();
 
             // Remove role info of previous members from current member's task
             $currentResult = preg_replace('#' . $member->role . '#', '', $currentResult);
@@ -56,7 +56,7 @@ class SequentialExecution implements ExecutionInterface
 
         // get updated answer after any coordination
         foreach ($members as $member) {
-            $result = $member->result;
+            $result = $member->getResult();
 
             if ($result && !$member->excludeReply) {
                 $results[$member->name] = $result;

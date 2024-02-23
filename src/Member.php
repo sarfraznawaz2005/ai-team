@@ -9,13 +9,13 @@ class Member
 {
     public string $name;
     public string $role;
-    public string $result;
     public bool $excludeReply = false;
     public bool $verbose = true;
-
+    
     private LLMProvider $llmProvider;
     private mixed $data;
     private string $task;
+    private string $result;
 
     /**
      * @var Member[] Array of members

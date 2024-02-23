@@ -60,7 +60,7 @@ echo $result;
 
 :raised_hands: Result:
 
-```bash
+```cmd
 Researcher performing the task:
 
 Role: You are a Researcher
@@ -87,15 +87,17 @@ Sachin Tendulkar
 
 FINAL TEAM RESULT:
 
-Sachin Tendulkar is a legendary Indian cricketer widely regarded as one of the greatest batsmen in the history of the sport. Known as the "Master Blaster," Tendulkar holds the record for most centuries (100) in international cricket.
+Sachin Tendulkar is a legendary Indian cricketer widely regarded as one of the greatest batsmen 
+in the history of the sport. Known as the "Master Blaster," Tendulkar holds the record for most 
+centuries (100) in international cricket.
 ```
 
 [See more examples here](https://github.com/sarfraznawaz2005/ai-team/tree/main/examples)
 
 ## How it works ?
 
-Each member performs his tasks and passes result to next member as context. Next members uses that information as context
-to perform his task and provide own results and so on. Therefore result of each member is passed to next to build
+Each member performs his task and passes result to next member as context. Next members uses that information as context
+to perform his task and provide own results to next and so on. Therefore result of each member is passed to next to build
 collective knowledge and infer results based on that.
 
 ## Supported LLMs
@@ -270,8 +272,9 @@ $CodeReviewer = (new Member(
     new GoogleGeminiAI($apiKey)
 ))
     ->assignTask(
-        'Your job is to do code review of code written by software engineer and make sure it has no errors. 
-        If it has errors, you should fix those and provide corrected code in its entirety.'
+        'Your job is to do code review of code written by software engineer and make sure it has
+         no errors. If it has errors, you should fix those and provide corrected code in its 
+         entirety.'
     )
     // max 2 feedback attempts to try to get correct code answer from software engineer
     ->provideFeedbackTo([$SoftwareEngineer], 2);
@@ -281,8 +284,8 @@ $QAEngineer = (new Member(
     'You are expert QA Engineer',
     new GoogleGeminiAI($apiKey)
 ))
-    ->assignTask('Senior Code Reviewer will provide you code for a game, your job is to make sure game is playable
-     and you have no errors. Otherwise list the issues you identify.')
+    ->assignTask('Senior Code Reviewer will provide you code for a game, your job is to make sure
+     game is playable and you have no errors. Otherwise list the issues you identify.')
     // max 2 feedback attempts to try to get correct code answer from software engineer
     ->provideFeedbackTo([$SoftwareEngineer], 2);
 
@@ -298,7 +301,7 @@ echo $result;
 
 It would result in something like:
 
-```bash
+```cmd
 Senior Software Engineer performing the task:
 
 Role: You are expert software engineer specializing in game development with over 10 years of experience.
