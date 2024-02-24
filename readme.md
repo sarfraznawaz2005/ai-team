@@ -275,8 +275,7 @@ $CodeReviewer = (new Member(
 ))
     ->assignTask(
         'Your job is to do code review of code written by software engineer and make sure it has
-         no errors. If it has errors, you should fix those and provide corrected code in its 
-         entirety.'
+         no errors.'
     )
     // max 2 feedback attempts to try to get correct code answer from software engineer
     ->provideFeedbackTo([$SoftwareEngineer], 2);
