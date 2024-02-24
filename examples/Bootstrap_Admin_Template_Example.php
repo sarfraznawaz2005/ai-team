@@ -13,11 +13,12 @@ $WebDesigner = (new Member(
     'You are an expert web designer with over 10 years of experience.',
     new GoogleGeminiAI($apiKey)
 ))->assignTask(
-    'Create an admin dashboard template using bootstrap 5. It must have navbar, sidebar.
-    Template must be responsive and modern, it must have black navbar and sidebar but 
-    white middle content area. It should also have dropdown on top right corner with
-    user and setting links. Put all links that are necessary for an admin dashboard.
-    You must provide code with all html and css in it without separate files.
+    'Create an admin dashboard template using bootstrap 5 for "My Web Store". It must
+    have navbar, sidebar. Template must be responsive and modern, it must have black 
+    navbar and sidebar but white middle content area. It should also have dropdown on 
+    top right corner with user and setting links. Put all links that are necessary for 
+    an admin dashboard. You must provide code with all html and css in it without 
+    separate files.
 
 	Below are rules you must follow:
 	- Make sure entire code is in SINGLE and in SAME index.html file including CSS.
