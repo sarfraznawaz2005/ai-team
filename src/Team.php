@@ -109,9 +109,11 @@ class Team
 
     private function cleanMarkDownCodeBlockPointers($result): array|string|null
     {
-        $pattern = "/[a-zA-Z]*\\n.*?\s*/s";
+        $pattern = '/```[a-zA-Z]*\n?(.*?)```/s';
 
-        return preg_replace($pattern, '', $result);
+        return preg_replace_callback($pattern, function ($matches) {
+            return $matches[1];
+        }, $result);
     }
 
     public function saveToFile(string $filePath): void
