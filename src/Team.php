@@ -20,6 +20,8 @@ class Team
      */
     private array $members = [];
 
+    private string $finalResult;
+
     /**
      * @param string $overallGoal
      * @param LLMProvider|null $llmProvider
@@ -87,17 +89,33 @@ class Team
         $results = $this->execution->executeWork($this->members);
 
         foreach ($results as $memberName => $memberResult) {
-            $membersOverAllResult .= "$memberName:\n\n$memberResult\n\n";
+            if ($memberResult) {
+                $membersOverAllResult .= "$memberName:\n\n$memberResult\n\n";
+            }
         }
+
+        $this->finalResult = $this->cleanMarkDownCodeBlockPointers($membersOverAllResult);
 
         if (!$this->overallGoal) {
-            return Helper::Text('FINAL TEAM RESULT:', 'green', 'bold') . "\n$membersOverAllResult";
+            return Helper::Text('FINAL TEAM RESULT:', 'green', 'bold') . "\n$this->finalResult";
         }
 
-        $finalPrompt = $this->overallGoal . "\n\n" . self::INSTRUCTION_WORDS . "\n\n$membersOverAllResult";
+        $finalPrompt = $this->overallGoal . "\n\n" . self::INSTRUCTION_WORDS . "\n\n$this->finalResult";
 
-        $finalResult = $this->llmProvider->generateText($finalPrompt);
+        $this->finalResult = $this->cleanMarkDownCodeBlockPointers($this->llmProvider->generateText($finalPrompt));
 
-        return Helper::Text('FINAL TEAM RESULT:', 'green', 'bold') . "$finalResult\n";
+        return Helper::Text('FINAL TEAM RESULT:', 'green', 'bold') . "$this->finalResult\n";
+    }
+
+    private function cleanMarkDownCodeBlockPointers($result): array|string|null
+    {
+        $pattern = "/[a-zA-Z]*\\n.*?\s*/s";
+
+        return preg_replace($pattern, '', $result);
+    }
+
+    public function saveToFile(string $filePath): void
+    {
+        file_put_contents($filePath, $this->finalResult);
     }
 }
