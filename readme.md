@@ -365,13 +365,6 @@ Also notice use of `saveToFile` method to save final results to a given path.
 
 ## Note
 
-Although inspired by excellent [CrewAI](https://github.com/joaomdmoura/crewai) python package, AI-Team ended up being
-different and simple.
-
 Not recommended to be used in production, watch out for costs, use at your own risk!
 
-**Probably I won't be updating this package much (hence no release created) due to lack of time but I hope someone in PHP community comes up with better and robust package for PHP as PHP Community deserves too!. CrewAI is good starting point to follow.**
-
-**PRs are welcomed though in `develop`  branch**
-
-
+**Probably I won't be updating this package much (hence no release created) due to lack of time but PRs are welcomed through `develop`  branch.**
