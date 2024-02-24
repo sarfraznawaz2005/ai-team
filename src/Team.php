@@ -116,8 +116,14 @@ class Team
         }, $result);
     }
 
-    public function saveToFile(string $filePath): void
+    public function saveToFile(string $filePath)
     {
-        file_put_contents($filePath, $this->finalResult);
+        if (file_put_contents($filePath, $this->finalResult)) {
+            Helper::outputText('FILE SAVED!', 'green', 'bold');
+        } else {
+            Helper::outputText('Could not save file!', 'red', 'bold');
+        }
+
+        return $this;
     }
 }
