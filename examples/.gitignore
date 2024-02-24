@@ -2,3 +2,6 @@ composer.phar
 /vendor/
 /vendor/*
 composer.lock
+game.html
+index.html
+styles.css

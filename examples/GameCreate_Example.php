@@ -55,5 +55,7 @@ $gameTeam
     ->addMembers([$SoftwareEngineer, $CodeReviewer, $QAEngineer])
     ->excludeResults([$CodeReviewer, $QAEngineer]);
 
-$result = $gameTeam->performTasks();
-echo $result;
+$gameTeam->performTasks();
+
+// save results to file
+$gameTeam->saveToFile('game.html');

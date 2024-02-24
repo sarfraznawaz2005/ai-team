@@ -116,7 +116,7 @@ class Team
         }, $result);
     }
 
-    public function saveToFile(string $filePath)
+    public function saveToFile(string $filePath): static
     {
         if (file_put_contents($filePath, $this->finalResult)) {
             Helper::outputText('FILE SAVED!', 'green', 'bold');

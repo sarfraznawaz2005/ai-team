@@ -297,8 +297,10 @@ $gameTeam
     ->addMembers([$SoftwareEngineer, $CodeReviewer, $QAEngineer])
     ->excludeResults([$CodeReviewer, $QAEngineer]);
 
-$result = $gameTeam->performTasks();
-echo $result;
+$gameTeam->performTasks();
+
+// save final results to file
+$gameTeam->saveToFile('game.html');
 ```
 
 It would result in something like:
@@ -358,6 +360,8 @@ Senior Software Engineer:
 
 Notice the use of `excludeResults` method in above example. If used, the results of that member will not be shown in
 final team output and will not be passed to any other member except for whom they are in feedback/communication loop.
+
+Also notice use of `saveToFile` method to save final results to a given path.
 
 ## Note
 
