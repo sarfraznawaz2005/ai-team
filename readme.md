@@ -298,8 +298,8 @@ $gameTeam
 
 $gameTeam->performTasks();
 
-// save final results to file
-$gameTeam->saveToFile('game.html');
+// save final results to file and remove member names from result
+$gameTeam->saveToFile('game.html', true);
 ```
 
 It would result in something like:
@@ -367,3 +367,5 @@ Also notice use of `saveToFile` method to save final results to a given path.
 Not recommended to be used in production, watch out for costs, use at your own risk!
 
 **Probably I won't be updating this package much (hence no release created) due to lack of time but PRs are welcomed through `develop`  branch.**
+
+
