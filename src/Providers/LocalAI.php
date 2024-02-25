@@ -65,6 +65,7 @@ class LocalAI implements LLMProvider
             throw new AITeamException($responseData['error']['message']);
         }
 
+        print_r($responseData);
         throw new AITeamException('No or invalid response!');
     }
 }

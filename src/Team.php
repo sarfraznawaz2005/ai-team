@@ -50,7 +50,8 @@ class Team
 
     /**
      * @param Member[] $members Array of members
-     * @throws Exception If a member with the same name already exists
+     * @return Team
+     * @throws Exception
      */
     public function addMembers(array $members): static
     {
@@ -94,7 +95,7 @@ class Team
             }
         }
 
-        $this->finalResult = $this->cleanMarkDownCodeBlockPointers($membersOverAllResult);
+        $this->finalResult = $membersOverAllResult;
 
         if (!$this->overallGoal) {
             return Helper::Text('FINAL TEAM RESULT:', 'green', 'bold') . "\n$this->finalResult";
@@ -102,22 +103,24 @@ class Team
 
         $finalPrompt = $this->overallGoal . "\n\n" . self::INSTRUCTION_WORDS . "\n\n$this->finalResult";
 
-        $this->finalResult = $this->cleanMarkDownCodeBlockPointers($this->llmProvider->generateText($finalPrompt));
+        $this->finalResult = $this->llmProvider->generateText($finalPrompt);
 
         return Helper::Text('FINAL TEAM RESULT:', 'green', 'bold') . "$this->finalResult\n";
     }
 
-    private function cleanMarkDownCodeBlockPointers($result): array|string|null
+    /**
+     * @param string $filePath Where to save results.
+     * @param bool $removeMemberNames Remove member names from final result
+     * @return $this
+     */
+    public function saveToFile(string $filePath, bool $removeMemberNames = false): static
     {
-        $pattern = '/```[a-zA-Z]*\n?(.*?)```/s';
+        if ($removeMemberNames) {
+            foreach ($this->members as $member) {
+                $this->finalResult = str_replace($member->name . ":\n\n", '', $this->finalResult);
+            }
+        }
 
-        return preg_replace_callback($pattern, function ($matches) {
-            return $matches[1];
-        }, $result);
-    }
-
-    public function saveToFile(string $filePath): static
-    {
         if (file_put_contents($filePath, $this->finalResult)) {
             Helper::outputText('FILE SAVED!', 'green', 'bold');
         } else {

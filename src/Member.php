@@ -11,7 +11,7 @@ class Member
     public string $role;
     public bool $excludeReply = false;
     public bool $verbose = true;
-    
+
     private LLMProvider $llmProvider;
     private mixed $data;
     private string $task;
@@ -148,7 +148,14 @@ class Member
 
         //Helper::outputText($prompt, 'blue', 'bold');
 
-        return $this->llmProvider->generateText($prompt);
+        $result = $this->llmProvider->generateText($prompt);
+
+        // remove markdown language markers
+        $pattern = '/```[a-zA-Z]*\n?(.*?)```/s';
+
+        return preg_replace_callback($pattern, function ($matches) {
+            return $matches[1];
+        }, $result);
     }
 
     public function getResult(): string
@@ -281,7 +288,6 @@ class Member
         prompt;
 
         $result = $this->getLLMResult($prompt);
-        $result = str_ireplace(['```json', '```JSON', '```'], '', $result);
 
         $json = json_decode($result, true);
 

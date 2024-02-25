@@ -76,4 +76,15 @@ class UrlDataProvider implements DataProviderInterface
 
         return strip_tags($this->llm->generateText($prompt));
     }
+
+    private function preprocessContent($content): string
+    {
+        $content = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $content);
+        $content = preg_replace('/<style\b[^>]*>(.*?)<\/style>/is', '', $content);
+
+        $content = strip_tags($content);
+
+        return trim($content);
+    }
+
 }

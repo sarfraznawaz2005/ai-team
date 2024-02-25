@@ -33,8 +33,7 @@ $CodeReviewer = (new Member(
     new GoogleGeminiAI($apiKey)
 ))
     ->assignTask(
-        'Your job is to do code review of code written by software engineer and make sure it has no errors. 
-        If it has errors, you should fix those and provide corrected code in its entirety.'
+        'Your job is to do code review of code written by software engineer and make sure it has no errors.'
     )
     // max 2 feedback attempts to try to get correct code answer from software engineer
     ->provideFeedbackTo([$SoftwareEngineer], 2);
@@ -58,4 +57,4 @@ $gameTeam
 $gameTeam->performTasks();
 
 // save results to file
-$gameTeam->saveToFile('game.html');
+$gameTeam->saveToFile('game.html', true);

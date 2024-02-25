@@ -275,8 +275,7 @@ $CodeReviewer = (new Member(
 ))
     ->assignTask(
         'Your job is to do code review of code written by software engineer and make sure it has
-         no errors. If it has errors, you should fix those and provide corrected code in its 
-         entirety.'
+         no errors.'
     )
     // max 2 feedback attempts to try to get correct code answer from software engineer
     ->provideFeedbackTo([$SoftwareEngineer], 2);
@@ -299,8 +298,8 @@ $gameTeam
 
 $gameTeam->performTasks();
 
-// save final results to file
-$gameTeam->saveToFile('game.html');
+// save final results to file and remove member names from result
+$gameTeam->saveToFile('game.html', true);
 ```
 
 It would result in something like:
@@ -365,11 +364,8 @@ Also notice use of `saveToFile` method to save final results to a given path.
 
 ## Note
 
-Although inspired by excellent [CrewAI](https://github.com/joaomdmoura/crewai) python package, AI-Team ended up being
-different and simple.
-
 Not recommended to be used in production, watch out for costs, use at your own risk!
 
-**Probably I won't be updating this package much (hence no release created) due to lack of time but I hope someone in PHP community comes up with better and robust package for PHP as PHP Community deserves too!. CrewAI is good starting point to follow.**
+**Probably I won't be updating this package much (hence no release created) due to lack of time but PRs are welcomed through `develop`  branch.**
 
-**PRs are welcomed though.**
+
