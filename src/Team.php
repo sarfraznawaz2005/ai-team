@@ -95,7 +95,7 @@ class Team
             }
         }
 
-        $this->finalResult = $this->cleanMarkDownCodeBlockPointers($membersOverAllResult);
+        $this->finalResult = $membersOverAllResult;
 
         if (!$this->overallGoal) {
             return Helper::Text('FINAL TEAM RESULT:', 'green', 'bold') . "\n$this->finalResult";
@@ -103,18 +103,9 @@ class Team
 
         $finalPrompt = $this->overallGoal . "\n\n" . self::INSTRUCTION_WORDS . "\n\n$this->finalResult";
 
-        $this->finalResult = $this->cleanMarkDownCodeBlockPointers($this->llmProvider->generateText($finalPrompt));
+        $this->finalResult = $this->llmProvider->generateText($finalPrompt);
 
         return Helper::Text('FINAL TEAM RESULT:', 'green', 'bold') . "$this->finalResult\n";
-    }
-
-    private function cleanMarkDownCodeBlockPointers($result): array|string|null
-    {
-        $pattern = '/```[a-zA-Z]*\n?(.*?)```/s';
-
-        return preg_replace_callback($pattern, function ($matches) {
-            return $matches[1];
-        }, $result);
     }
 
     /**
