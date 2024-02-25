@@ -57,4 +57,4 @@ $gameTeam
 $gameTeam->performTasks();
 
 // save results to file
-$gameTeam->saveToFile('game.html');
+$gameTeam->saveToFile('game.html', true);

@@ -13,25 +13,24 @@ $WebDesigner = (new Member(
     'You are an expert web designer with over 10 years of experience.',
     new GoogleGeminiAI($apiKey)
 ))->assignTask(
-    'Create an admin dashboard template using bootstrap 5 for "My Web Store". It must
-    have navbar, sidebar. Template must be responsive and modern. It should also have 
-    dropdown on top right corner with user and setting links. Put all links that are 
-    necessary for the admin dashboard. You must provide code with all html and css in 
-    it without separate files.
+    'Please write HTML & CSS for an admin dashboard template for "My Web Store". 
+    It must have navbar, sidebar. It should be responsive and modern. It should also 
+    have dropdown on top right corner with user and setting links and other links that are
+    necessary for the admin dashboard. Prefer bootstrap for admin dashboard.
 
 	Below are rules you must follow:
 	- Make sure entire code is in SINGLE and in SAME index.html file including CSS.
-	- Use CDN for latest version of bootstrap.
-	- Do not put crossorigin integrity stuff in links.
-	- Do not assume anything and provide full working code without comments.
+	- Use CDN for latest versions.
+	- Please do not put "crossorigin" integrity check in links.
+	- Please do not assume anything and provide full working code without comments.
 	'
 );
 
 $CodeReviewer = (new Member(
     'Senior Code Reviewer',
-    'You are expert code reviewer.',
+    'You are an expert code reviewer.',
     new GoogleGeminiAI($apiKey)
-))->assignTask('Your job is to do code review code of Web Designer and notify about any issues in it.')
+))->assignTask('Please do code review code of Senior Web Designer and notify him about any issues in it.')
     // max 2 feedback attempts to try to get correct code answer from software engineer
     ->provideFeedbackTo([$WebDesigner], 2);
 
@@ -43,4 +42,4 @@ $team = (new Team())
 $team->performTasks();
 
 // save results to file
-$team->saveToFile('dashboard.html');
+$team->saveToFile('dashboard.html', true);

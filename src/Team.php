@@ -50,7 +50,8 @@ class Team
 
     /**
      * @param Member[] $members Array of members
-     * @throws Exception If a member with the same name already exists
+     * @return Team
+     * @throws Exception
      */
     public function addMembers(array $members): static
     {
@@ -116,8 +117,19 @@ class Team
         }, $result);
     }
 
-    public function saveToFile(string $filePath): static
+    /**
+     * @param string $filePath Where to save results.
+     * @param bool $removeMemberNames Remove member names from final result
+     * @return $this
+     */
+    public function saveToFile(string $filePath, bool $removeMemberNames = false): static
     {
+        if ($removeMemberNames) {
+            foreach ($this->members as $member) {
+                $this->finalResult = str_replace($member->name . ":\n\n", '', $this->finalResult);
+            }
+        }
+
         if (file_put_contents($filePath, $this->finalResult)) {
             Helper::outputText('FILE SAVED!', 'green', 'bold');
         } else {

@@ -69,6 +69,7 @@ class GoogleGeminiAI implements LLMProvider
             throw new AITeamException($responseData['error']['message']);
         }
 
+        print_r($responseData);
         throw new AITeamException('No or invalid response! Make sure you have specified correct API key.');
     }
 }
