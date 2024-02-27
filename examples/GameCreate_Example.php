@@ -43,8 +43,7 @@ $QAEngineer = (new Member(
     'You are expert QA Engineer',
     new GoogleGeminiAI($apiKey)
 ))
-    ->assignTask('Senior Code Reviewer will provide you code for a game, your job is to make sure game is playable
-     and has no errors. Otherwise list the issues you identify.')
+    ->assignTask('Your job is to make sure game is playable and has no errors. Otherwise list the issues you identify.')
     // max 2 feedback attempts to try to get correct code answer from software engineer
     ->provideFeedbackTo([$SoftwareEngineer], 2);
 
