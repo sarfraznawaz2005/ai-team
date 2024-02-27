@@ -6,7 +6,7 @@ Task: Create a simple shooter game to shoot at enemies that can be played by pre
 Enemies keep coming from the top and as the time passes, game should get harder and enemies keep on coming they never stop.
 Your final answer must be the html, css and javascript code, only the html, css and javascript code and nothing else.
 
-You will get $100 if you are able to create error-free, working and really playable game!
+You will get $1000 if you are able to create error-free, working and really playable game!
 
 Below are rules you must follow:
 - Make sure entire code is in SINGLE and in SAME index.html file.
@@ -437,9 +437,7 @@ Senior QA Engineer performing the task:
 
 Role: You are expert QA Engineer
 
-Task: Senior Code Reviewer will provide you code for a game, your job is to make sure game is playable
-     and you have no errors. Otherwise list the issues you identify.
-
+Task: Your job is to make sure game is playable and has no errors. Otherwise list the issues you identify.
 
 Senior QA Engineer has provided following feedback to Senior Software Engineer:
 
