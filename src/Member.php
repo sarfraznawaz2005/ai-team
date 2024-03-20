@@ -131,7 +131,7 @@ class Member
         if ($this->verbose) {
             // let's not show feedback prompts
             // TODO: prompting texts should not be hard-coded in this class.
-            if (!str_contains(strtolower($roleTask), 'your answer must not be sams as your last answer')) {
+            if (!str_contains(strtolower($roleTask), 'your answer must not be same as your last answer')) {
                 Helper::outputText($this->name . " performing the task:", 'green');
                 Helper::outputText($roleTask, 'yellow');
             }
@@ -191,15 +191,18 @@ class Member
 
                     $feedback = $this->assessResultAndGenerateFeedback($member);
 
-                    if ($feedback->isSuccessful() && $this->verbose) {
-                        if ($retryCount === 1) {
-                            Helper::outputText("$this->name is satisfied with answer of $member->name!", 'green');
-                        } else {
-                            Helper::outputText("Successful collaboration between $this->name and $member->name!", 'green');
-                            Helper::outputText("$member->name has replied with satisfying answer!", 'green');
+                    if ($feedback->isSuccessful()) {
+                        if ($this->verbose) {
+                            if ($retryCount === 1) {
+                                Helper::outputText("$this->name is satisfied with answer of $member->name!", 'green');
+                            } else {
+                                Helper::outputText("Successful collaboration between $this->name and $member->name!", 'green');
+                                Helper::outputText("$member->name has replied with satisfying answer!", 'green');
+                            }
+
+                            Helper::outputText("$this->name exiting the feedback loop with $member->name.\n", 'green');
                         }
 
-                        Helper::outputText("$this->name exiting the feedback loop with $member->name.\n", 'green');
                         break;
                     }
 
@@ -220,7 +223,7 @@ class Member
                     \n\n
                     However, you have received following feedback from $this->name, you must respect suggestions given.
                     Please first thank $this->name for his suggestions and then re-write and correct your answer based 
-                    on suggestions given by $this->name below. Your answer MUST not be sams as Your Last Answer.
+                    on suggestions given by $this->name below. Your answer MUST not be same as Your Last Answer.
                     \n\n
                     Suggestions By $this->name:
                     > $feedback->suggestion\n
@@ -248,14 +251,14 @@ class Member
         #######################################################
         # For Testing
         #######################################################
-//        if (1) {
-//            if ($this->verbose) {
-//                Helper::outputText("\n$this->name has provided following feedback to $member->name:", 'green');
-//                Helper::outputText("\n" . 'code has a syntax error', 'yellow');
-//            }
-//
-//            return new Feedback(false, 'code has a syntax error');
-//        }
+        if (0) {
+            if ($this->verbose) {
+                Helper::outputText("\n$this->name has provided following feedback to $member->name:", 'green');
+                Helper::outputText("\n" . 'code has a syntax error', 'yellow');
+            }
+
+            return new Feedback(false, 'code has a syntax error');
+        }
         #######################################################
 
         $feedbackMemberName = $member->name;

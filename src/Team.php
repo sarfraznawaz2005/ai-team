@@ -34,10 +34,10 @@ class Team
         $this->llmProvider = $llmProvider;
         $this->execution = $execution ?: new SequentialExecution($executionDelayMilliSeconds);
 
-        $this->aiTEamLogo();
+        $this->aiTeamLogo();
     }
 
-    private function aiTEamLogo(): void
+    private function aiTeamLogo(): void
     {
         echo "
          █████  ██       ████████ ███████  █████  ███    ███ 
