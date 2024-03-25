@@ -35,6 +35,30 @@ class GoogleGeminiAI implements LLMProvider
             ],
         ];
 
+        $this->options['generationConfig'] = [
+            'maxOutputTokens' => 4096,
+            //'temperature' => 0.5,
+        ];
+
+        $this->options['safetySettings'] = [
+            [
+                'category' => 'HARM_CATEGORY_HARASSMENT',
+                'threshold' => 'BLOCK_ONLY_HIGH',
+            ],
+            [
+                'category' => 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+                'threshold' => 'BLOCK_ONLY_HIGH',
+            ],
+            [
+                'category' => 'HARM_CATEGORY_HATE_SPEECH',
+                'threshold' => 'BLOCK_ONLY_HIGH',
+            ],
+            [
+                'category' => 'HARM_CATEGORY_DANGEROUS_CONTENT',
+                'threshold' => 'BLOCK_ONLY_HIGH',
+            ],
+        ];
+
         $apiUrl = $this->options['api_end_point'] . $this->options['model'] . ':generateContent?key=' . $this->apiKey;
 
         $postFields = $this->options;
