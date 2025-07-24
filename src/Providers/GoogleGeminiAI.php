@@ -10,7 +10,7 @@ class GoogleGeminiAI implements LLMProvider
 {
     private string $apiKey;
 
-    private array $options = ['model' => 'gemini-pro', 'api_end_point' => 'https://generativelanguage.googleapis.com/v1/models/'];
+    private array $options = ['model' => 'gemini-2.5-flash', 'api_end_point' => 'https://generativelanguage.googleapis.com/v1/models/'];
 
     /**
      * @param string $apiKey
@@ -36,7 +36,7 @@ class GoogleGeminiAI implements LLMProvider
         ];
 
         $this->options['generationConfig'] = [
-            'maxOutputTokens' => 4096,
+            'maxOutputTokens' => 16384,
             //'temperature' => 0.5,
         ];
 
